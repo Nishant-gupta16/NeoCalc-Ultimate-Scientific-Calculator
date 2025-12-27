@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoCalc | Ultimate Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <!-- Header with Logo and Controls -->
+        <header class="header">
+            <div class="brand-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Neo<span>Calc</span></h1>
+                        <p class="tagline">Advanced Scientific Calculator</p>
+                    </div>
+                </div>
+                
+                <div class="memory-display-container">
+                    <div class="memory-display-card">
+                        <i class="fas fa-memory"></i>
+                        <div class="memory-info">
+                            <span class="memory-label">Memory</span>
+                            <span class="memory-value" id="memory-display">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <div class="control-buttons">
+                    <button class="control-btn mode-toggle" id="mode-toggle" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-moon"></i>
+                        <span>Theme</span>
+                    </button>
+                    <button class="control-btn help-btn" id="help-btn" title="Help & Guide">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Guide</span>
+                    </button>
+                    <button class="control-btn advanced-toggle" id="advanced-toggle" title="Show/Hide Scientific Functions">
+                        <i class="fas fa-flask"></i>
+                        <span>Scientific</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Calculator Section -->
+        <main class="calculator">
+            <!-- Display Section -->
+            <div class="display-container">
+                <div class="display-header">
+                    <div class="mode-indicator" id="mode-indicator">
+                        <i class="fas fa-angle-right"></i>
+                        <span>DEG</span>
+                    </div>
+                    <div class="memory-indicator" id="memory-indicator">
+                        <i class="fas fa-save"></i>
+                        <span>M: 0.00</span>
+                    </div>
+                </div>
+                
+                <div class="calculation-display">
+                    <div class="history" id="history">Ready to calculate</div>
+                    <div class="current-input-container">
+                        <input type="text" class="current-input" id="current-input" value="0" readonly>
+                        <div class="result" id="result"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scientific Functions Panel -->
+            <div class="scientific-panel" id="scientific-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-atom"></i>
+                        <h3>Scientific Functions</h3>
+                    </div>
+                    <button class="close-panel" id="close-scientific">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="scientific-grid">
+                    <!-- Row 1: Trigonometry -->
+                    <button class="sci-btn" data-func="sin">
+                        <span>sin</span>
+                    </button>
+                    <button class="sci-btn" data-func="cos">
+                        <span>cos</span>
+                    </button>
+                    <button class="sci-btn" data-func="tan">
+                        <span>tan</span>
+                    </button>
+                    <button class="sci-btn" data-func="asin">
+                        <span>sin⁻¹</span>
+                    </button>
+                    <button class="sci-btn" data-func="acos">
+                        <span>cos⁻¹</span>
+                    </button>
+                    <button class="sci-btn" data-func="atan">
+                        <span>tan⁻¹</span>
+                    </button>
+                    
+                    <!-- Row 2: Logarithms & Constants -->
+                    <button class="sci-btn" data-func="log">
+                        <span>log</span>
+                    </button>
+                    <button class="sci-btn" data-func="ln">
+                        <span>ln</span>
+                    </button>
+                    <button class="sci-btn" data-func="exp">
+                        <span>eˣ</span>
+                    </button>
+                    <button class="sci-btn" data-func="pi">
+                        <span>π</span>
+                    </button>
+                    <button class="sci-btn" data-func="e">
+                        <span>e</span>
+                    </button>
+                    <button class="sci-btn" data-func="rand">
+                        <span>Rand</span>
+                    </button>
+                    
+                    <!-- Row 3: Powers & Roots -->
+                    <button class="sci-btn" data-func="sqrt">
+                        <span>√x</span>
+                    </button>
+                    <button class="sci-btn" data-func="square">
+                        <span>x²</span>
+                    </button>
+                    <button class="sci-btn" data-func="cube">
+                        <span>x³</span>
+                    </button>
+                    <button class="sci-btn" data-func="power">
+                        <span>xʸ</span>
+                    </button>
+                    <button class="sci-btn" data-func="fact">
+                        <span>x!</span>
+                    </button>
+                    <button class="sci-btn" data-func="mod">
+                        <span>mod</span>
+                    </button>
+                    
+                    <!-- Row 4: Advanced Functions -->
+                    <button class="sci-btn" data-func="deg">
+                        <span>DEG</span>
+                    </button>
+                    <button class="sci-btn" data-func="rad">
+                        <span>RAD</span>
+                    </button>
+                    <button class="sci-btn" data-func="grad">
+                        <span>GRAD</span>
+                    </button>
+                    <button class="sci-btn" data-func="hyp">
+                        <span>hyp</span>
+                    </button>
+                    <button class="sci-btn" data-func="abs">
+                        <span>|x|</span>
+                    </button>
+                    <button class="sci-btn" data-func="floor">
+                        <span>⌊x⌋</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Calculator Buttons -->
+            <div class="calculator-grid">
+                <!-- Memory Row -->
+                <button class="btn memory-btn" id="mc">
+                    <span>MC</span>
+                </button>
+                <button class="btn memory-btn" id="mr">
+                    <span>MR</span>
+                </button>
+                <button class="btn memory-btn" id="m-plus">
+                    <span>M+</span>
+                </button>
+                <button class="btn memory-btn" id="m-minus">
+                    <span>M-</span>
+                </button>
+                <button class="btn memory-btn" id="ms">
+                    <span>MS</span>
+                </button>
+                <button class="btn memory-btn" id="m-clear">
+                    <span>M</span>
+                </button>
+                
+                <!-- Control Row -->
+                <button class="btn clear-btn" id="clear">
+                    <span>C</span>
+                </button>
+                <button class="btn clear-btn" id="clear-entry">
+                    <span>CE</span>
+                </button>
+                <button class="btn clear-btn backspace-btn" id="backspace">
+                    <i class="fas fa-backspace"></i>
+                </button>
+                <button class="btn operator-btn" data-op="/">
+                    <span>÷</span>
+                </button>
+                
+                <!-- Number Pad -->
+                <button class="btn number-btn" data-num="7">
+                    <span>7</span>
+                </button>
+                <button class="btn number-btn" data-num="8">
+                    <span>8</span>
+                </button>
+                <button class="btn number-btn" data-num="9">
+                    <span>9</span>
+                </button>
+                <button class="btn operator-btn" data-op="*">
+                    <span>x</span>
+                </button>
+                
+                <button class="btn number-btn" data-num="4">
+                    <span>4</span>
+                </button>
+                <button class="btn number-btn" data-num="5">
+                    <span>5</span>
+                </button>
+                <button class="btn number-btn" data-num="6">
+                    <span>6</span>
+                </button>
+                <button class="btn operator-btn" data-op="-">
+                    <span>-</span>
+                </button>
+                
+                <button class="btn number-btn" data-num="1">
+                    <span>1</span>
+                </button>
+                <button class="btn number-btn" data-num="2">
+                    <span>2</span>
+                </button>
+                <button class="btn number-btn" data-num="3">
+                    <span>3</span>
+                </button>
+                <button class="btn operator-btn" data-op="+">
+                    <span>+</span>
+                </button>
+                
+                <!-- Bottom Row -->
+                <button class="btn number-btn zero-btn" data-num="0">
+                    <span>0</span>
+                </button>
+                <button class="btn decimal-btn" id="decimal">
+                    <span>.</span>
+                </button>
+                <button class="btn sign-btn" id="sign">
+                    <span>±</span>
+                </button>
+                <button class="btn equals-btn" id="equals">
+                    <span>=</span>
+                </button>
+                
+                <!-- Parentheses Row -->
+                <button class="btn operator-btn" data-op="(">
+                    <span>(</span>
+                </button>
+                <button class="btn operator-btn" data-op=")">
+                    <span>)</span>
+                </button>
+                <button class="btn operator-btn" data-op="%">
+                    <span>%</span>
+                </button>
+                <button class="btn operator-btn" data-op="^">
+                    <span>^</span>
+                </button>
+            </div>
+
+            <!-- Quick Functions Bar -->
+            <div class="quick-functions">
+                <button class="quick-btn" id="sqrt-btn">
+                    <!-- <i class="fas fa-square-root-alt"></i> -->
+                    <span>√x</span>
+                </button>
+                <button class="quick-btn" id="square-btn">
+                    <!-- <i class="fas fa-superscript"></i> -->
+                    <span>x²</span>
+                </button>
+                <button class="quick-btn" id="inverse-btn">
+                    <!-- <i class="fas fa-divide"></i> -->
+                    <span>¹/ₓ</span>
+                </button>
+                <button class="quick-btn" id="percent-btn">
+                    <!-- <i class="fas fa-percentage"></i> -->
+                    <span>%</span>
+                </button>
+                <button class="quick-btn" id="exp-btn">
+                    <!-- <i class="fas fa-expand-alt"></i> -->
+                    <span>eˣ</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Help Modal -->
+        <div class="help-modal" id="help-modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2>NeoCalc User Guide</h2>
+                    </div>
+                    <button class="close-modal" id="close-help">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="guide-tabs">
+                        <button class="tab-btn active" data-tab="basic">
+                            <i class="fas fa-calculator"></i>
+                            <span>Basic</span>
+                        </button>
+                        <button class="tab-btn" data-tab="memory">
+                            <i class="fas fa-memory"></i>
+                            <span>Memory</span>
+                        </button>
+                        <button class="tab-btn" data-tab="scientific">
+                            <i class="fas fa-atom"></i>
+                            <span>Scientific</span>
+                        </button>
+                        <button class="tab-btn" data-tab="shortcuts">
+                            <i class="fas fa-keyboard"></i>
+                            <span>Shortcuts</span>
+                        </button>
+                        <button class="tab-btn" data-tab="about">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </button>
+                    </div>
+
+                    <div class="tab-content active" id="basic-tab">
+                        <h3>Basic Operations Guide</h3>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-plus-minus"></i>
+                                </div>
+                                <h4>Basic Arithmetic</h4>
+                                <p>Perform addition, subtraction, multiplication, and division with BODMAS support for complex calculations.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <h4>Percentage</h4>
+                                <p>Calculate percentages, discounts, markups, and tax calculations instantly with one click.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-eraser"></i>
+                                </div>
+                                <h4>Clear Functions</h4>
+                                <p>C (Clear All), CE (Clear Entry), and Backspace allow precise editing of calculations.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <h4>Quick Operations</h4>
+                                <p>Square root, square, inverse, and exponential functions available in the quick bar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="memory-tab">
+                        <h3>Memory Functions Guide</h3>
+                        <div class="memory-guide">
+                            <div class="memory-card">
+                                <div class="memory-key">MC</div>
+                                <div class="memory-details">
+                                    <h4>Memory Clear</h4>
+                                    <p>Clears all stored values from memory register</p>
+                                </div>
+                            </div>
+                            <div class="memory-card">
+                                <div class="memory-key">MR</div>
+                                <div class="memory-details">
+                                    <h4>Memory Recall</h4>
+                                    <p>Recalls the stored value from memory to display</p>
+                                </div>
+                            </div>
+                            <div class="memory-card">
+                                <div class="memory-key">M+</div>
+                                <div class="memory-details">
+                                    <h4>Memory Add</h4>
+                                    <p>Adds current value to the memory register</p>
+                                </div>
+                            </div>
+                            <div class="memory-card">
+                                <div class="memory-key">M-</div>
+                                <div class="memory-details">
+                                    <h4>Memory Subtract</h4>
+                                    <p>Subtracts current value from the memory register</p>
+                                </div>
+                            </div>
+                            <div class="memory-card">
+                                <div class="memory-key">MS</div>
+                                <div class="memory-details">
+                                    <h4>Memory Store</h4>
+                                    <p>Stores current value in memory register</p>
+                                </div>
+                            </div>
+                            <div class="memory-card">
+                                <div class="memory-key">M</div>
+                                <div class="memory-details">
+                                    <h4>Memory View</h4>
+                                    <p>Displays current memory value without recall</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="scientific-tab">
+                        <h3>Scientific Functions Guide</h3>
+                        <p class="section-intro">Click the <strong>Scientific</strong> button to access advanced mathematical functions:</p>
+                        
+                        <div class="sci-categories">
+                            <div class="sci-category-card">
+                                <div class="category-header">
+                                    <i class="fas fa-sine-wave"></i>
+                                    <h4>Trigonometric</h4>
+                                </div>
+                                <ul class="function-list">
+                                    <li><strong>sin, cos, tan</strong> - Basic trigonometric functions</li>
+                                    <li><strong>sin⁻¹, cos⁻¹, tan⁻¹</strong> - Inverse trigonometric functions</li>
+                                    <li><strong>DEG/RAD/GRAD</strong> - Angle mode selection</li>
+                                    <li><strong>hyp</strong> - Hypotenuse calculation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="sci-category-card">
+                                <div class="category-header">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h4>Logarithmic</h4>
+                                </div>
+                                <ul class="function-list">
+                                    <li><strong>log</strong> - Base-10 logarithm</li>
+                                    <li><strong>ln</strong> - Natural logarithm (base e)</li>
+                                    <li><strong>eˣ</strong> - Exponential function</li>
+                                    <li><strong>π, e</strong> - Mathematical constants</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="sci-category-card">
+                                <div class="category-header">
+                                    <i class="fas fa-superscript"></i>
+                                    <h4>Powers & Roots</h4>
+                                </div>
+                                <ul class="function-list">
+                                    <li><strong>√x</strong> - Square root</li>
+                                    <li><strong>x², x³</strong> - Square and cube</li>
+                                    <li><strong>xʸ</strong> - Power function</li>
+                                    <li><strong>mod</strong> - Modulus operation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="sci-category-card">
+                                <div class="category-header">
+                                    <i class="fas fa-random"></i>
+                                    <h4>Advanced</h4>
+                                </div>
+                                <ul class="function-list">
+                                    <li><strong>x!</strong> - Factorial</li>
+                                    <li><strong>|x|</strong> - Absolute value</li>
+                                    <li><strong>⌊x⌋</strong> - Floor function</li>
+                                    <li><strong>Rand</strong> - Random number generator</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="shortcuts-tab">
+                        <h3>Keyboard Shortcuts Guide</h3>
+                        <div class="shortcuts-section">
+                            <div class="shortcut-category">
+                                <h4><i class="fas fa-keyboard"></i> Numbers & Operators</h4>
+                                <div class="shortcut-list">
+                                    <div class="shortcut-item">
+                                        <kbd>0-9</kbd>
+                                        <span>Input numbers</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>+ - * /</kbd>
+                                        <span>Basic operators</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>.</kbd>
+                                        <span>Decimal point</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>( )</kbd>
+                                        <span>Parentheses</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="shortcut-category">
+                                <h4><i class="fas fa-bolt"></i> Function Keys</h4>
+                                <div class="shortcut-list">
+                                    <div class="shortcut-item">
+                                        <kbd>Enter</kbd>
+                                        <span>Calculate (=)</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>Escape</kbd>
+                                        <span>Clear All (C)</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>Backspace</kbd>
+                                        <span>Delete last digit</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>%</kbd>
+                                        <span>Percentage</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="shortcut-category">
+                                <h4><i class="fas fa-magic"></i> Quick Shortcuts</h4>
+                                <div class="shortcut-list">
+                                    <div class="shortcut-item">
+                                        <kbd>Ctrl + M</kbd>
+                                        <span>Toggle Scientific Panel</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>Ctrl + H</kbd>
+                                        <span>Open Help Guide</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>Ctrl + D</kbd>
+                                        <span>Toggle Dark/Light Mode</span>
+                                    </div>
+                                    <div class="shortcut-item">
+                                        <kbd>Alt + S</kbd>
+                                        <span>Square Root</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="about-tab">
+                        <h3>About NeoCalc</h3>
+                        <div class="about-hero">
+                            <div class="about-logo">
+                                <i class="fas fa-calculator"></i>
+                                <h2>NeoCalc v1.0</h2>
+                            </div>
+                            <p class="about-description">A modern, feature-rich scientific calculator with an elegant design and powerful functionality.</p>
+                        </div>
+                        
+                        <div class="features-showcase">
+                            <div class="feature-highlight">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div class="highlight-content">
+                                    <h4>Modern Design</h4>
+                                    <p>Clean, responsive interface with smooth dark/light mode transitions</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-highlight">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <div class="highlight-content">
+                                    <h4>Full Featured</h4>
+                                    <p>Complete calculator with basic, memory, and advanced scientific functions</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-highlight">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="highlight-content">
+                                    <h4>Pure JavaScript</h4>
+                                    <p>Built with vanilla JavaScript for optimal performance and no dependencies</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-highlight">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="highlight-content">
+                                    <h4>Responsive</h4>
+                                    <p>Perfectly optimized for desktop, tablet, and mobile devices</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
